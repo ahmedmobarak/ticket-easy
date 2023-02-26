@@ -1,4 +1,5 @@
 export interface IEvent{
+    _id?: string,
     title: string,
     artist: string,
     orginizer: string,
@@ -9,4 +10,6 @@ export interface IEvent{
     vip: number,
     normal: number,
     seats: number,
+    status?: string,
+    category?: 'concert' | 'match' | 'other'
 }

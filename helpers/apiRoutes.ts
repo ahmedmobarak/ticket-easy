@@ -9,7 +9,8 @@ export const ApiRoutes = {
     },
     auth: {
         login: 'auth/login',
-        signup: 'users'
+        signup: 'users',
+        update: 'users/'
     },
     wallet: {
         getBalance: 'wallet/'

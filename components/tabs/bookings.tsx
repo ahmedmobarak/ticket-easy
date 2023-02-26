@@ -1,11 +1,9 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, StatusBar, FlatList } from "react-native"
 import { LangContext } from "../../context/langContext";
 import { ThemeContext } from "../../context/themeContext";
 import { UserContext } from "../../context/userContext";
-import { Local } from "../../enviroment";
-import { ApiRoutes } from "../../helpers/apiRoutes";
+import { bookingsApi } from "../../fetch/bookings";
 import { themes } from "../../themes/themes";
 import { EventCard } from "../segments/EventCard";
 import { TopbarComponent } from "../segments/topbar";
@@ -19,7 +17,7 @@ export default function BookingsComponent({navigation}) {
     const langContext = useContext(LangContext);
 
     useEffect(() => {       
-        axios.get(Local.baseUrl + ApiRoutes.bookings.main + userContext.user.id).then((res) => setBookings(res.data))
+        bookingsApi.getUserBookings(userContext.user.id).then((res) => setBookings(res.data))
             .catch((error) => {
             console.log('failed: ',error)
         })
@@ -44,9 +42,9 @@ export default function BookingsComponent({navigation}) {
     }
 
     return (
-        <View style={{direction: langContext.isRTL ? 'rtl' : 'ltr'}}>
+        <View style={{marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr'}}>
             <TopbarComponent navigation={navigation} />
-        <View style={{marginTop: StatusBar.currentHeight, flex: 1, backgroundColor: themes[themeContext].primary}}>
+        <View style={{backgroundColor: themes[themeContext].primary}}>
             <FlatList
                 data={bookings}
                 renderItem={Booking}

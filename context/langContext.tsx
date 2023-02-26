@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
-import { I18nManager } from "react-native";
+import { I18nManager, NativeModules } from "react-native";
 import { LocalStorageKeys } from "../helpers/localStorageKeys";
 
 interface LangContextProps{isRTL: boolean, toggleLang: Function, lang: 'en' | 'ar'}
@@ -9,7 +9,7 @@ export const LangContext = createContext({} as LangContextProps);
 
 export function LangProvider({children}) {
     const [isRTL, setIsRTL] = useState(false);
-    const [lang, setLang] = useState('' as 'ar' | 'en');
+    const [lang, setLang] = useState('en' as 'ar' | 'en');
 
     const toggleLang = () => {
         setLang((current: 'en' | 'ar') => current == 'en' ? 'ar' : 'en')
@@ -18,10 +18,10 @@ export function LangProvider({children}) {
     }
 
     useEffect(() => {
-        AsyncStorage.getItem(LocalStorageKeys.lang, (error, result: 'en' | 'ar') => {
-            if(error) setLang(I18nManager.getConstants().isRTL ? 'ar' : 'en');
-            setLang(result)
-        })
+        AsyncStorage.getItem(LocalStorageKeys.lang).then((res: 'ar' | 'en') => {
+            setLang(res); setIsRTL(res == 'ar' ? true : false)
+        }).catch(err =>{ setLang('ar'); setIsRTL(false)})
+        console.log(lang)
     }, [lang])
     
     return(

@@ -1,13 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useState } from "react";
-import { useColorScheme } from "react-native";
+import { createContext, useEffect, useState } from "react";
 import { LocalStorageKeys } from "../helpers/localStorageKeys";
-
-let localTheme;
-AsyncStorage.getItem(LocalStorageKeys.theme, (error, result) => {
-    if(error) return(localTheme = useColorScheme())
-    else localTheme = result;
-})
 
 interface ThemeContextProps{
     theme: 'light' | 'dark',
@@ -17,11 +10,14 @@ interface ThemeContextProps{
 export const ThemeContext = createContext({} as ThemeContextProps);
 
 export function ThemeProvider({children}) {
-    const [theme, setTheme] = useState(localTheme);
+    const [theme, setTheme] = useState('dark' as 'dark' | 'light');
     const toggleTheme = () => {
         AsyncStorage.setItem(LocalStorageKeys.theme, theme == 'dark' ? 'light' : 'dark');
         setTheme((current: 'light' | 'dark') => current == 'light' ? 'dark' : 'light')
     }
+    useEffect(() => {
+        AsyncStorage.getItem(LocalStorageKeys.theme).then((res: 'dark' | 'light') => setTheme(res));
+    })
     return(
         <ThemeContext.Provider value={{
             theme: theme,

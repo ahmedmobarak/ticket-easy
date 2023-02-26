@@ -14,6 +14,8 @@ import { themes } from "../../themes/themes";
 import { ThemeContext } from "../../context/themeContext";
 import { LangContext } from "../../context/langContext";
 import { lang } from "../../i18n/lang";
+import { EventsApi } from "../../fetch/events";
+import { UserContext } from "../../context/userContext";
 
 export function EventsScreen() {
     const [list, setList] = useState([] as IEvent[]);
@@ -24,10 +26,12 @@ export function EventsScreen() {
 
     const themeContext = useContext(ThemeContext);
     const langContext = useContext(LangContext);
-    if(themeContext == undefined) themeContext == 'light';
+    const user = useContext(UserContext);
+    
 
     useEffect(() => {
-            axios.get(Local.baseUrl + ApiRoutes.events.main + cat).then(function (res) {
+        console.log("theme context: ", themeContext.theme, "langContext: ", langContext.lang, "user: ", user.user)
+            EventsApi.getEvents(cat).then(function (res) {
                 setList(res.data);
                 setTempList(res.data);
                 setIsLoading(false);
@@ -41,11 +45,11 @@ export function EventsScreen() {
 
     // const styles = useMemo(() => createStyles('light'), [theme]);
 
-    const Root = ({ item }) => {
+    const Root = ({ item }: {item: IEvent}) => {
         return <Event item={item} />
     }
 
-    const Event = ({ item }) => {
+    const Event = ({ item }: {item: IEvent}) => {
         const navigation = useNavigation();
         return (
             <View style={styles.container}>
@@ -55,11 +59,15 @@ export function EventsScreen() {
                             <Text style={{ fontFamily: 'sans-serif', fontSize: 24, fontWeight: 'bold', color: 'white' }}>{item.title}</Text>
                             <Text style={{ color: 'white' }}>{item.location} | {item.dateTime}</Text>
                         </View>
-                        <TouchableOpacity style={styles.btn}
-                            onPress={() => navigation.navigate(AppRoutes.checkout, {
+                        <TouchableOpacity 
+                            style={styles.btn}
+                            onPress={() => {
+                                console.log("pressed")
+                                navigation.navigate(AppRoutes.checkout, {
                                 itemId: 1,
                                 event: item
                             })}
+                        }
                         >
                            <Ionicons name={!langContext.isRTL ? "chevron-forward" : "chevron-back"} color={"tomato"} size={32} />
                             {/* <Text style={{ color: 'tomato', fontSize: 18, fontWeight: 'bold' }}>Book</Text> */}
@@ -101,7 +109,7 @@ export function EventsScreen() {
     }
 
     else return (
-        <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
+        <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: 'ltr'}]}>
             <SearchBar />
             <View style={{
                 display: 'flex',

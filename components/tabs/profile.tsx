@@ -1,30 +1,31 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import { IUser } from "../../models/user";
 import { TopbarComponent } from "../segments/topbar";
-import { LocalStorageKeys } from "../../helpers/localStorageKeys";
-import { AppRoutes } from "../../helpers/appRoutes";
 import { UserContext } from "../../context/userContext";
 import { ThemeContext } from "../../context/themeContext";
 import { themes } from "../../themes/themes";
 import { LangContext } from "../../context/langContext";
 import { CustomText } from "../custom/text";
 import { lang } from "../../i18n/lang";
+import { AuthApi } from "../../fetch/auth";
 
 export default function ProfileComponent({ navigation }) {
+    const user = useContext(UserContext);
+
     const [isEditing, setIsEditing] = useState(false);
+    const [editedUser, setEditedUser] = useState(user.user as IUser);
     
-    const user: IUser = useContext(UserContext).user;
     const themeContext: 'light' | 'dark' = useContext(ThemeContext).theme;
     const langContext = useContext(LangContext);
 
-    function logout() {
-        AsyncStorage.removeItem(LocalStorageKeys.user).then(l => navigation.navigate(AppRoutes.login));
+    function updateUser(){
+        console.log(editedUser)
+        AuthApi.updateUserInfo(editedUser).then(res => user.setUser(res.data)).catch(error => console.log(error))
     }
     return (
-        <ScrollView style={{marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr', width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}}>
+        <ScrollView style={{minHeight: '100%', marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr', width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}}>
         <TopbarComponent navigation={navigation} />
         <View style={[styles.container]}>
             <View style={
@@ -42,10 +43,10 @@ export default function ProfileComponent({ navigation }) {
                     <TouchableOpacity onPress={() => setIsEditing(true)} style={[styles.btnGroup, { backgroundColor: isEditing ? '#9EC0FF' : '' }]}><Ionicons name="pencil" size={26} /><Text>{lang.ar.btnTitles.edit}</Text></TouchableOpacity>
                     <TouchableOpacity onPress={() => setIsEditing(false)} style={[styles.btnGroup, { backgroundColor: !isEditing ? '#9EC0FF' : '' }]}><Ionicons name="disc" size={26} /><Text>{lang.ar.btnTitles.cancel}</Text></TouchableOpacity>
                 </View>
-                <TextInput textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.name} editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
-                <TextInput textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.email} keyboardType="email-address" editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
-                <TextInput textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.phone} keyboardType="phone-pad" textContentType="telephoneNumber" editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
-                <TouchableOpacity disabled={!isEditing} style={styles.saveBtn} onPress={() => logout()}>
+                <TextInput onChangeText={(text) => setEditedUser((current) => ({ ...current, name: text}))} textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.user.name} editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
+                <TextInput onChangeText={(text) => setEditedUser((current) => ({ ...current, email: text}))} textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.user.email} keyboardType="email-address" editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
+                <TextInput onChangeText={(text) => setEditedUser((current) => ({ ...current, phone: text}))} textAlign={langContext.isRTL ? 'right' : 'left'} defaultValue={user?.user.phone} keyboardType="phone-pad" textContentType="telephoneNumber" editable={isEditing} style={[styles.input, {textAlign: langContext.isRTL ? 'right' : 'left'}]} />
+                <TouchableOpacity disabled={!isEditing} style={styles.saveBtn} onPress={() => updateUser()}>
                     <CustomText isRTL={langContext.isRTL} isGray={false} theme={themeContext}>{lang[langContext.lang].btnTitles.save}</CustomText>
                 </TouchableOpacity>
             </View>
@@ -60,8 +61,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 1,
-        height: '100%'
+        height: '100%',
+        backgroundColor: 'red'
     },
     info: {
         display: 'flex',

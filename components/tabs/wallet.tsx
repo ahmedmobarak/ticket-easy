@@ -1,35 +1,31 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, StatusBar } from "react-native";
 import { LangContext } from "../../context/langContext";
 import { ThemeContext } from "../../context/themeContext";
-import { Local } from "../../enviroment";
-import { ApiRoutes } from "../../helpers/apiRoutes";
-import { getUserInfo } from "../../helpers/getUserInfo";
 import { themes } from "../../themes/themes";
 import { CustomText } from "../custom/text";
 import { TopbarComponent } from "../segments/topbar";
 import { lang } from "../../i18n/lang";
+import { WalletApi } from "../../fetch/wallet";
+import { UserContext } from "../../context/userContext";
 
 export function WalletComponent(){
 
     const [balance, setBalance] = useState(null);
     const themeContext = useContext(ThemeContext).theme;
     const langContext = useContext(LangContext);
+    const userContext = useContext(UserContext);
 
     useEffect(() => {
-        getUserInfo().then(uesr => {
-
-            axios.get(Local.baseUrl+ApiRoutes.wallet.getBalance+uesr.id).then(res => {
+            WalletApi.getCurrentBalance(userContext.user.id).then(res => {
                 console.log(res.data)
                 setBalance(res.data)
-            }).catch(error => console.log(error))
-        })
+            }).catch(error => console.log(error));
     }, [])
 
 
     return(
-        <>
+        <View style={{marginTop: StatusBar.currentHeight}}>
         <TopbarComponent navigation={undefined} />
         <View style={[styles.container, {width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}]}>
             <View style={{
@@ -43,7 +39,7 @@ export function WalletComponent(){
                 <Text style={{color: 'white', fontSize: 24}}>{balance?.wallet} {lang[langContext.lang].lables.sdg}</Text>
             </View>
         </View>
-        </>
+        </View>
     )
 
 }

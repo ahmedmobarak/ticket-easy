@@ -1,15 +1,9 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { FlatList, SafeAreaView, Text, View, Image, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, TextInput } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { FlatList, SafeAreaView, Text, View, Image, StyleSheet, ImageBackground, StatusBar, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { IEvent } from '../../models/event'
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Local } from "../../enviroment";
-import { ApiRoutes } from "../../helpers/apiRoutes";
-import { AppRoutes } from "../../helpers/appRoutes";
 import { LoadingComponent } from "./loading";
-import { LocalStorageKeys } from "../../helpers/localStorageKeys";
+import { Event } from "./Event";
 import { themes } from "../../themes/themes";
 import { ThemeContext } from "../../context/themeContext";
 import { LangContext } from "../../context/langContext";
@@ -30,8 +24,8 @@ export function EventsScreen() {
     
 
     useEffect(() => {
-        console.log("theme context: ", themeContext.theme, "langContext: ", langContext.lang, "user: ", user.user)
-            EventsApi.getEvents(cat).then(function (res) {
+        // console.log("lang: ", langContext);
+            EventsApi.getEvents(cat, langContext.lang).then(function (res) {
                 setList(res.data);
                 setTempList(res.data);
                 setIsLoading(false);
@@ -49,34 +43,8 @@ export function EventsScreen() {
         return <Event item={item} />
     }
 
-    const Event = ({ item }: {item: IEvent}) => {
-        const navigation = useNavigation();
-        return (
-            <View style={styles.container}>
-                <ImageBackground style={styles.img} source={{ uri: Local.baseUrl + item.image }}>
-                    <View style={styles.description}>
-                        <View>
-                            <Text style={{ fontFamily: 'sans-serif', fontSize: 24, fontWeight: 'bold', color: 'white' }}>{item.title}</Text>
-                            <Text style={{ color: 'white' }}>{item.location} | {item.dateTime}</Text>
-                        </View>
-                        <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                console.log("pressed")
-                                navigation.navigate(AppRoutes.checkout, {
-                                itemId: 1,
-                                event: item
-                            })}
-                        }
-                        >
-                           <Ionicons name={!langContext.isRTL ? "chevron-forward" : "chevron-back"} color={"tomato"} size={32} />
-                            {/* <Text style={{ color: 'tomato', fontSize: 18, fontWeight: 'bold' }}>Book</Text> */}
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        )
-    }
+
+    
 
     const SearchBar = () => {
         return(
@@ -109,7 +77,7 @@ export function EventsScreen() {
     }
 
     else return (
-        <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: 'ltr'}]}>
+        <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
             <SearchBar />
             <View style={{
                 display: 'flex',
@@ -177,7 +145,7 @@ const styles = StyleSheet.create({
             flexDirection: 'row',
             width: '95%',
             alignSelf: 'center',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
             backfaceVisibility: 'hidden',
             // backgroundColor: 'rgba(255, 99, 71, 0.7)',
             backgroundColor: 'tomato',
@@ -198,7 +166,8 @@ const styles = StyleSheet.create({
             height: 60,
             borderRadius: 30,
             paddingVertical: 5,
-            paddingHorizontal: 10
+            paddingHorizontal: 10,
+            left: 0
         },
         search: {
             color: 'tomato',

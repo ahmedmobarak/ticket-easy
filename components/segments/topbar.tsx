@@ -23,7 +23,8 @@ export function TopbarComponent({navigation}){
         AsyncStorage.removeItem(LocalStorageKeys.user).then(l => navigation.navigate(AppRoutes.login));
     }
     function toggleTheme(){
-        themeContext.toggleTheme();
+        let newTheme = themeContext.theme == 'dark' ? 'light' : 'dark';
+        themeContext.toggleTheme(newTheme);
     }
     function toggleLang(){
         langContext.toggleLang()

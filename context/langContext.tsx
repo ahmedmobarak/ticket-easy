@@ -11,18 +11,25 @@ export function LangProvider({children}) {
     const [isRTL, setIsRTL] = useState(false);
     const [lang, setLang] = useState('en' as 'ar' | 'en');
 
+    useEffect(() => {
+        getLang();
+    }, [])
     const toggleLang = () => {
         setLang((current: 'en' | 'ar') => current == 'en' ? 'ar' : 'en')
         setIsRTL(!isRTL);
         AsyncStorage.setItem(LocalStorageKeys.lang, isRTL ? 'en' : 'ar')
-    }
+    };
 
-    useEffect(() => {
-        AsyncStorage.getItem(LocalStorageKeys.lang).then((res: 'ar' | 'en') => {
-            setLang(res); setIsRTL(res == 'ar' ? true : false)
-        }).catch(err =>{ setLang('ar'); setIsRTL(false)})
-        console.log(lang)
-    }, [lang])
+    const getLang = async () => {
+        try {
+          const lang: any = await AsyncStorage.getItem(LocalStorageKeys.lang);
+          setLang(lang);
+          setIsRTL(lang == 'ar' ? true : false);
+        } catch (error) {
+         setLang('en'); 
+         setIsRTL(false); 
+        }
+      };
     
     return(
         <LangContext.Provider value={{

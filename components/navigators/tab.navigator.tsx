@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import HomeStack, { HomeComponent } from "../tabs/home";
+import { HomeComponent } from "../tabs/home";
 import BookingsComponent from "../tabs/bookings";
 import ProfileComponent from "../tabs/profile";
 import { AppRoutes } from "../../helpers/appRoutes";

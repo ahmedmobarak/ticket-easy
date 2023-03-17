@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView, StatusBar } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView, StatusBar, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import { IUser } from "../../models/user";
@@ -25,7 +25,9 @@ export default function ProfileComponent({ navigation }) {
         AuthApi.updateUserInfo(editedUser).then(res => user.setUser(res.data)).catch(error => console.log(error))
     }
     return (
-        <ScrollView style={{minHeight: '100%', marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr', width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}}>
+        <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
+
+        <ScrollView contentContainerStyle={{height: '100%'}} style={{ minHeight: '100%', direction: langContext.isRTL ? 'rtl' : 'ltr', width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}}>
         <TopbarComponent navigation={navigation} />
         <View style={[styles.container]}>
             <View style={
@@ -52,6 +54,7 @@ export default function ProfileComponent({ navigation }) {
             </View>
         </View>
         </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -59,10 +62,11 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         display: 'flex',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
-        backgroundColor: 'red'
+        backgroundColor: 'withe'
     },
     info: {
         display: 'flex',

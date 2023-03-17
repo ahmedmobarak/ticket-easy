@@ -1,13 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
-import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from "react-native";
 import { LangContext } from "../../context/langContext";
 import { ThemeContext } from "../../context/themeContext";
 import { UserContext } from "../../context/userContext";
-import { Local } from "../../enviroment";
 import { bookingsApi } from "../../fetch/bookings";
-import { ApiRoutes } from "../../helpers/apiRoutes";
 import { AppRoutes } from "../../helpers/appRoutes";
 import { lang } from "../../i18n/lang";
 import { CardBookingData, WalletBookingData } from "../../models/bookingData";
@@ -53,8 +50,8 @@ export default function CheckoutComponent({route, navigation}){
 
     return(
         <ScrollView style={[styles.container, {marginTop: StatusBar.currentHeight, backgroundColor: themes[themeContext].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
-            <View style={{padding: 15, flexDirection: 'row', direction: 'ltr'}}>
-                <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons size={30} name="chevron-back"></Ionicons></TouchableOpacity>
+            <View style={{padding: 5, flexDirection: 'row', direction: 'ltr'}}>
+                <TouchableOpacity style={{marginStart: '95%'}} onPress={() => navigation.goBack()}><Ionicons size={30} name="chevron-back"></Ionicons></TouchableOpacity>
                 <CustomText isGray={false} isRTL={langContext.isRTL} theme={themeContext}>{lang[langContext.lang].titles.checkout}</CustomText>
             </View>
             <EventCard theme={themeContext} event={event} bookingId={undefined} />
@@ -62,8 +59,8 @@ export default function CheckoutComponent({route, navigation}){
                 <View style={{marginTop: 15}}>
                     <Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].lables.ticketType}</Text>
                     <View style={[styles.btnGroup, {flexDirection: 'row'}]}>
-                        <TouchableOpacity style={[styles.tab, {backgroundColor: type == 'normal' ? themes.dark.orange : '', borderBottomLeftRadius: 25}]} onPress={() => setType('normal')}><Text style={{color: '#FFFFFF'}}>{lang[langContext.lang].btnTitles.normal} {event.normal}</Text></TouchableOpacity>
-                        <TouchableOpacity style={[styles.tab, {backgroundColor: type == 'vip' ? themes.dark.orange : '', borderBottomRightRadius: 25}]} onPress={() => setType('vip')}><Text style={{color: '#FFFFFF'}}>{lang[langContext.lang].btnTitles.vip} {event.vip}</Text></TouchableOpacity>
+                        <TouchableOpacity style={[styles.tab, {backgroundColor: type == 'normal' ? themes.dark.orange : '#DC5076', borderBottomLeftRadius: 25}]} onPress={() => setType('normal')}><Text style={{color: '#FFFFFF'}}>{lang[langContext.lang].btnTitles.normal} {event.normal}</Text></TouchableOpacity>
+                        <TouchableOpacity style={[styles.tab, {backgroundColor: type == 'vip' ? themes.dark.orange : '#DC5076', borderBottomRightRadius: 25}]} onPress={() => setType('vip')}><Text style={{color: '#FFFFFF'}}>{lang[langContext.lang].btnTitles.vip} {event.vip}</Text></TouchableOpacity>
                     </View>
                 </View>
             ) : ''
@@ -71,12 +68,12 @@ export default function CheckoutComponent({route, navigation}){
             
             <View style={{marginVertical: 20}}>
                 <Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].lables.noOfSeats}</Text>
-                <TextInput style={[styles.input, {minHeight: 40}]} placeholderTextColor={'grey'} placeholder="1~5" onChangeText={setSeats} />
+                <TextInput style={[styles.input, {minHeight: 40}]} placeholderTextColor={'grey'} placeholder="1~5" onChange={(e) => setSeats} />
                 
             </View>
             <View style={[styles.btnGroup, {flexDirection: 'row'}]}>
-                <TouchableOpacity onPress={() => setPayment('wallet')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'wallet' ? themes.dark.orange : ''}]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithWallet}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setPayment('card')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'card' ? themes.dark.orange : '' }]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithCard}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setPayment('wallet')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'wallet' ? themes.dark.orange : '#DC5076'}]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithWallet}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setPayment('card')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'card' ? themes.dark.orange : '#DC5076' }]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithCard}</Text></TouchableOpacity>
             </View>
             <View>
                 {payment === 'wallet' ? 
@@ -91,8 +88,8 @@ export default function CheckoutComponent({route, navigation}){
                 </View> :
                 <View style={{paddingVertical: 10}}>
                     <Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithCard}</Text>
-                    <TextInput style={styles.input} placeholderTextColor={'grey'} placeholder="ATM card number" onChangeText={setCardNo} />
-                    <TextInput style={styles.input} placeholderTextColor={'grey'} placeholder="PIN" onChangeText={setPin} />
+                    <TextInput style={styles.input} placeholderTextColor={'grey'} placeholder="ATM card number" onChange={(e) => setCardNo} />
+                    <TextInput style={styles.input} placeholderTextColor={'grey'} placeholder="PIN" onChange={(e) => setPin} />
                     <TouchableOpacity 
                         style={styles.btn}
                         onPress={() => bookByCard()}>

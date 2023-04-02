@@ -40,7 +40,7 @@ export function EventsScreen() {
     // const styles = useMemo(() => createStyles('light'), [theme]);
 
     const Root = ({ item }: {item: IEvent}) => {
-        return <Event item={item} />
+        return <Event isRtl={langContext.isRTL} item={item} />
     }
 
 
@@ -49,13 +49,7 @@ export function EventsScreen() {
     const SearchBar = () => {
         return(
             <View style={styles.bar}>
-                <Image style={{flex: 1, width: 50, height: 50}} source={require('../../assets/logo.png')} />
                 <TextInput style={styles.search} placeholder="Try Adele" onChangeText={(text) => search(text) }/>                   
-                <Ionicons style={
-                    {
-                        flex: 1,
-                    }
-                } name="bulb" size={34} />
             </View>
         )
     }
@@ -178,7 +172,9 @@ const styles = StyleSheet.create({
             borderColor: 'tomato', 
             borderWidth: 1, 
             borderRadius: 25,
-            flex: 3
+            flex: 1,
+            height: 50,
+            maxWidth: '90%'
         },
         category: {
             paddingHorizontal: 15,

@@ -1,9 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppNavigator from "./components/navigators/app.navigator";
 import { LangProvider } from "./context/langContext";
 import { ThemeProvider } from "./context/themeContext";
 import { UserProvider } from "./context/userContext";
-import { LocalStorageKeys } from "./helpers/localStorageKeys";
 // import registerNNPushToken from 'native-notify';
 
 export default function App() {

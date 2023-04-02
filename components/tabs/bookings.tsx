@@ -34,7 +34,7 @@ export default function BookingsComponent({navigation}) {
             <View>
                     <View style={styles.container}>
                         <View style={styles.row}>
-                            <EventCard theme={themeContext} bookingId={booking._id} event={booking.eventId} />
+                            <EventCard theme={themeContext} isRtl={langContext.isRTL} bookingId={booking._id} event={booking.eventId} />
                         </View>
                     </View>
             </View>

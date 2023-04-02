@@ -6,7 +6,7 @@ import { AppRoutes } from "../../helpers/appRoutes";
 import { IEvent } from "../../models/event";
 import checkout from "../stack/checkout";
 
-export function Event({ item }: { item: IEvent }, isRtl) {
+export function Event({ item, isRtl }: { item: IEvent, isRtl: boolean }) {
     const checkout = (navigation, item) => {
         console.log(item);
 
@@ -17,7 +17,7 @@ export function Event({ item }: { item: IEvent }, isRtl) {
     };
     const navigation = useNavigation();
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {direction: 'ltr'}]}>
             <ImageBackground style={styles.img} source={{ uri: Local.baseUrl + item.image }}>
                 <View style={styles.description}>
                     <View>
@@ -25,7 +25,7 @@ export function Event({ item }: { item: IEvent }, isRtl) {
                         <Text style={{ color: 'white' }}>{item.location} | {item.dateTime}</Text>
                     </View>
                     <TouchableOpacity
-                        style={[styles.btn, {}]}
+                        style={[styles.btn, {left: isRtl ? 0 : '-91%'}]}
                         onPress={() => checkout(navigation, item)}
                     >
                         <Ionicons name={isRtl ? "chevron-back" : "chevron-forward"} color={"tomato"} size={32} />
@@ -98,8 +98,7 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 30,
         paddingVertical: 5,
-        paddingHorizontal: 10,
-        left: 0
+        paddingHorizontal: 10
     },
     search: {
         color: 'tomato',

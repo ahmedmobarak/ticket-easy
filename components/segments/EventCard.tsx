@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, Modal, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, Button } from "react-native";
 import { Local } from "../../enviroment";
 import { GradBackground } from "./gradBackground";
 import QRCode from "react-native-qrcode-svg"
-import { Ionicons } from "@expo/vector-icons";
 import { themes } from "../../themes/themes";
 
-export function EventCard({event, theme, bookingId}){
+export function EventCard({event, theme, isRtl, bookingId}){
 
     const [isVisible, setIsVisible] = useState(false);
+    const toggleModal = () => {
+        console.log("Pressed");
+        setIsVisible(!isVisible);
+    }
+
+    function CustomButton(){
+        return(
+            <TouchableOpacity onPress={toggleModal} style={{ padding: 15, zIndex: 100, backgroundColor: 'red', position: 'absolute' }}>
+                <Text>TEST</Text>
+            </TouchableOpacity>
+        )
+    }
 
     const QR = ({ id }) => {
         return (
@@ -40,18 +51,16 @@ export function EventCard({event, theme, bookingId}){
                     <Text style={[styles.details, {color: themes[theme].textColorGray}]}>{event.dateTime}</Text>
                     <Text style={[styles.details ,{fontSize: 16, color: themes[theme].textColorGray}]}>Normal: {event.normal} {event.vip ? ' | VIP ' + event.vip : ''}</Text>
                 </View>
-                {bookingId !== undefined ? <TouchableOpacity onPress={() => setIsVisible(true)} style={{ left: 0 }}>
-                    <Ionicons name="chevron-forward" size={24} color={themes[theme].textColor}/>
-                </TouchableOpacity> : <></>}
+                {bookingId !== undefined ? <CustomButton /> : <></>}
                 {
                 <Modal
-                        transparent={false}
-                        animationType={'slide'}
-                        visible={isVisible}
-                        onRequestClose={() => setIsVisible(false)}
-                    >
+                    transparent={false}
+                    animationType={'slide'}
+                    visible={isVisible}
+                    onRequestClose={() => setIsVisible(false)}
+                >
                         <GradBackground content={<QR id={bookingId} />} color1="#50995C" color2="#A0FFFFEA" />
-                    </Modal>
+                </Modal>
             }
             </View>
            

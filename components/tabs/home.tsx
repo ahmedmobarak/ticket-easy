@@ -9,7 +9,6 @@ export function HomeComponent({navigation}){
     const [user, setUser] = useState({});
     useEffect(() => {
       getUser()
-      I18nManager.forceRTL(true);
     }, [])
     
     async function getUser() {

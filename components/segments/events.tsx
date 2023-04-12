@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FlatList, SafeAreaView, Text, View, Image, StyleSheet, ImageBackground, StatusBar, TextInput, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FlatList, SafeAreaView, Text, View, Image, StyleSheet, StatusBar, TextInput, TouchableOpacity } from "react-native";
 import { IEvent } from '../../models/event'
 import { LoadingComponent } from "./loading";
 import { Event } from "./Event";
@@ -9,22 +8,17 @@ import { ThemeContext } from "../../context/themeContext";
 import { LangContext } from "../../context/langContext";
 import { lang } from "../../i18n/lang";
 import { EventsApi } from "../../fetch/events";
-import { UserContext } from "../../context/userContext";
 
 export function EventsScreen() {
     const [list, setList] = useState([] as IEvent[]);
     const [tempList, setTempList] = useState([] as IEvent[]);
-    const [theme, setTheme] = useState(String);
     const [isLoading, setIsLoading] = useState(true);
     const [cat, setCat] = useState('concert' as 'concert' | 'match' | 'other');
 
     const themeContext = useContext(ThemeContext);
     const langContext = useContext(LangContext);
-    const user = useContext(UserContext);
-    
 
     useEffect(() => {
-        // console.log("lang: ", langContext);
             EventsApi.getEvents(cat, langContext.lang).then(function (res) {
                 setList(res.data);
                 setTempList(res.data);
@@ -40,28 +34,22 @@ export function EventsScreen() {
     // const styles = useMemo(() => createStyles('light'), [theme]);
 
     const Root = ({ item }: {item: IEvent}) => {
-        return <Event item={item} />
+        return <Event isRtl={langContext.isRTL} item={item} />
     }
-
-
-    
 
     const SearchBar = () => {
         return(
             <View style={styles.bar}>
-                <Image style={{flex: 1, width: 50, height: 50}} source={require('../../assets/logo.png')} />
                 <TextInput style={styles.search} placeholder="Try Adele" onChangeText={(text) => search(text) }/>                   
-                <Ionicons style={
-                    {
-                        flex: 1,
-                    }
-                } name="bulb" size={34} />
             </View>
         )
     }
 
     const search = (text: string) => {
-        let filtered = list.filter(item => item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) || item.artist?.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
+        let filtered = list.filter(item => 
+            item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) 
+            || item.artist?.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+            );
         if (text === '') {
             return setTempList(list)
         }
@@ -178,7 +166,9 @@ const styles = StyleSheet.create({
             borderColor: 'tomato', 
             borderWidth: 1, 
             borderRadius: 25,
-            flex: 3
+            flex: 1,
+            height: 50,
+            maxWidth: '90%'
         },
         category: {
             paddingHorizontal: 15,

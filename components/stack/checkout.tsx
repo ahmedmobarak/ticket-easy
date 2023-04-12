@@ -51,7 +51,7 @@ export default function CheckoutComponent({route, navigation}){
     return(
         <ScrollView style={[styles.container, {marginTop: StatusBar.currentHeight, backgroundColor: themes[themeContext].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
             <View style={{padding: 5, flexDirection: 'row', direction: 'ltr'}}>
-                <TouchableOpacity style={{marginStart: '95%'}} onPress={() => navigation.goBack()}><Ionicons size={30} name="chevron-back"></Ionicons></TouchableOpacity>
+                <TouchableOpacity style={{marginStart: '95%', marginBottom: 10}} onPress={() => navigation.goBack()}><Ionicons size={30} name="chevron-back"></Ionicons></TouchableOpacity>
                 <CustomText isGray={false} isRTL={langContext.isRTL} theme={themeContext}>{lang[langContext.lang].titles.checkout}</CustomText>
             </View>
             <EventCard theme={themeContext} event={event} bookingId={undefined} />

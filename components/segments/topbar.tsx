@@ -70,14 +70,14 @@ export function TopbarComponent({navigation}){
 
 const styles = StyleSheet.create({
     container: {
+        fontFamily: 'Roboto',
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
         zIndex: 2,
-        borderBottomColor: '#A0A0A0',
-        borderBottomWidth: 1
+        paddingHorizontal: 20
     },
     img: {
         width: 60,

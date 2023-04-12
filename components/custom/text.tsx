@@ -12,7 +12,7 @@ interface TextProps{
 export function CustomText({theme, size, isGray, isRTL, children}: TextProps){
     return(
         <Text style={{
-            fontFamily: 'sans-serif',
+            fontFamily: 'Roboto',
             color: isGray ? themes[theme].textColorGray : themes[theme].primary,
             fontSize: size,
             textAlign: 'left',

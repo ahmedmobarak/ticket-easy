@@ -37,10 +37,10 @@ export default function TabNav() {
                 headerShown: false
             })}
         >
-            <Tab.Screen name={AppRoutes.home} component={HomeComponent} />
-            <Tab.Screen name={AppRoutes.bookings} component={BookingsComponent} />
-            <Tab.Screen name={AppRoutes.wallet} component={WalletComponent} />
             <Tab.Screen name={AppRoutes.profile} component={ProfileComponent} />
+            <Tab.Screen name={AppRoutes.wallet} component={WalletComponent} />
+            <Tab.Screen name={AppRoutes.bookings} component={BookingsComponent} />
+            <Tab.Screen name={AppRoutes.home} component={HomeComponent} />
         </Tab.Navigator>
     )
 }

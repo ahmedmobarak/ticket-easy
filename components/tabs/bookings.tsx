@@ -7,7 +7,7 @@ import { bookingsApi } from "../../fetch/bookings";
 import { themes } from "../../themes/themes";
 import { EventCard } from "../segments/EventCard";
 import { TopbarComponent } from "../segments/topbar";
-
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export default function BookingsComponent({ navigation }) {
     const [bookings, setBookings] = useState();
@@ -33,22 +33,11 @@ export default function BookingsComponent({ navigation }) {
         )
     }
 
-    const Item = ({ booking }) => {
-        return (
-            <View>
-                <View style={styles.container}>
-                    <View style={styles.row}>
-                        <EventCard theme={themeContext} isRtl={langContext.isRTL} bookingId={booking._id} event={booking.eventId} />
-                    </View>
-                </View>
-            </View>
-        )
-    }
-
     return (
-        <SafeAreaView style={[styles.safeArea, { paddingTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr' }]}>
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: themes[themeContext].primary, marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr' }]}>
+            <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
             <TopbarComponent navigation={navigation} />
-            <View style={{ backgroundColor: themes[themeContext].primary }}>
+            <View>
                 <FlatList
                     data={bookings}
                     renderItem={Booking}

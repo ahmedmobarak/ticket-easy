@@ -1,5 +1,5 @@
 export const DarkTheme = {
-    primary: '#333238',
+    primary: '#101935',
     accent: '#5E5959',
     textColor: '#E0E0E0',
     textColorGray: '#D1D1D1',

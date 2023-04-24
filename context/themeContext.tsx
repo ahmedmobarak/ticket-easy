@@ -22,7 +22,7 @@ export function ThemeProvider({children}) {
     const getTheme = async () => {
         try {
           const theme: any = await AsyncStorage.getItem(LocalStorageKeys.theme);
-          if(theme == null) setTheme('light');
+          if(theme == null || theme == undefined) setTheme('light');
           else setTheme(theme);
         } catch (error) {
          setTheme('dark') 

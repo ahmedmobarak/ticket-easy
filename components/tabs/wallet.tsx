@@ -8,6 +8,7 @@ import { TopbarComponent } from "../segments/topbar";
 import { lang } from "../../i18n/lang";
 import { WalletApi } from "../../fetch/wallet";
 import { UserContext } from "../../context/userContext";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export function WalletComponent(){
 
@@ -26,6 +27,7 @@ export function WalletComponent(){
 
     return(
         <View style={{marginTop: StatusBar.currentHeight}}>
+        <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
         <TopbarComponent navigation={undefined} />
         <View style={[styles.container, {width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}]}>
             <View style={{
@@ -49,6 +51,6 @@ const styles = StyleSheet.create({
         display: 'flex', 
         // justifyContent: 'center', 
         alignItems: 'center',
-        top: 5
+        top: 0
     }
 })

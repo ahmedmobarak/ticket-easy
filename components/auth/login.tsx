@@ -59,7 +59,12 @@ export default function LoginComponent({ navigation }) {
         }
     }
 
-    return (
+    if(isLoading) return (
+        <View style={styles.container}>
+            <Text>Signin in..</Text>
+        </View>
+    )
+    else return (
         <ImageBackground style={{width: '100%', height: '100%'}} source={require('../../assets/login.jpg')}>
             <View style={styles.container}>
                 <View style={styles.card}>

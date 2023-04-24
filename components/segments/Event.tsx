@@ -4,7 +4,6 @@ import { View, ImageBackground, TouchableOpacity, StatusBar, Text, StyleSheet } 
 import { Local } from "../../enviroment";
 import { AppRoutes } from "../../helpers/appRoutes";
 import { IEvent } from "../../models/event";
-import checkout from "../stack/checkout";
 
 export function Event({ item, isRtl }: { item: IEvent, isRtl: boolean }) {
     const checkout = (navigation, item) => {
@@ -15,19 +14,18 @@ export function Event({ item, isRtl }: { item: IEvent, isRtl: boolean }) {
     };
     const navigation = useNavigation();
     return (
-        <View style={[styles.container, {direction: 'ltr'}]}>
+        <View style={[styles.container, {direction: isRtl ? 'rtl' : 'ltr'}]}>
             <ImageBackground style={styles.img} source={{ uri: Local.baseUrl + item.image }}>
-                <View style={styles.description}>
-                    <View>
-                        <Text style={{ fontFamily: 'sans-serif', fontSize: 24, fontWeight: 'bold', color: 'white' }}>{item.title}</Text>
-                        <Text style={{ color: 'white' }}>{item.location} | {item.dateTime}</Text>
+                <View style={[styles.description, {alignItems: 'flex-start', flexDirection: isRtl ? 'row' : 'row-reverse'}]}>
+                    <View style={{ display: 'flex', flex: 7, marginStart: 0.5, alignItems: isRtl ? 'flex-end' : 'flex-start', width: '100%' }}>
+                        <Text style={{ textAlign: 'left', fontSize: 22, fontWeight: 'bold', color: 'white' }}>{item.title}</Text>
+                        <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}>{item.location} | {item.dateTime}</Text>
                     </View>
                     <TouchableOpacity
-                        style={[styles.btn, {left: isRtl ? 0 : '-91%'}]}
+                        style={[styles.btn, {flex: 1, position: 'absolute', alignSelf: 'center', marginEnd: isRtl ? 0 : 5, marginStart: isRtl ? 5 : 0}]}
                         onPress={() => checkout(navigation, item)}
                     >
                         <Ionicons name={isRtl ? "chevron-back" : "chevron-forward"} color={"tomato"} size={32} />
-                        {/* <Text style={{ color: 'tomato', fontSize: 18, fontWeight: 'bold' }}>Book</Text> */}
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -72,7 +70,6 @@ const styles = StyleSheet.create({
     },
     description: {
         display: 'flex',
-        flexDirection: 'row',
         width: '95%',
         alignSelf: 'center',
         justifyContent: 'space-between',

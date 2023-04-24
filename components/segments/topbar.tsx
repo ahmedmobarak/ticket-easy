@@ -32,24 +32,24 @@ export function TopbarComponent({navigation}){
     const menu = () => {
         if(isVisible){
         return(
-            <View style={[styles.menu, {marginTop: StatusBar.currentHeight, backgroundColor: themes[themeContext.theme].primary}]}>
-                    <TouchableOpacity onPress={() => toggleTheme()} style={[styles.row, { alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
+            <View style={[styles.menu, { direction: langContext.isRTL ? 'rtl' : 'ltr', marginStart: langContext.isRTL ? -100 : 2, backgroundColor: themes[themeContext.theme].primary}]}>
+                    <TouchableOpacity onPress={() => toggleTheme()} style={[styles.row, { flexDirection: langContext.isRTL ? 'row-reverse' : 'row', alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
                         <Ionicons style={{marginEnd: 10, color: themes[themeContext.theme].textColor}} size={16} name="bulb"></Ionicons>
                         <CustomText size={16} isRTL={langContext.isRTL} theme={themeContext.theme} isGray={true}>{lang[langContext.lang].menu.theme[themeContext.theme]}</CustomText> 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => toggleLang()} style={[styles.row, { alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
+                    <TouchableOpacity onPress={() => toggleLang()} style={[styles.row, { flexDirection: langContext.isRTL ? 'row-reverse' : 'row', alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
                         <Ionicons style={{marginEnd: 10, color: themes[themeContext.theme].textColor}} size={16} name="globe"></Ionicons>
                         <CustomText size={16} isRTL={langContext.isRTL} theme={themeContext.theme} isGray={true}>{lang[langContext.lang].menu.lang[langContext.lang]}</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.row, { alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
+                    <TouchableOpacity style={[styles.row, { flexDirection: langContext.isRTL ? 'row-reverse' : 'row', alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
                         <Ionicons style={{marginEnd: 10, color: themes[themeContext.theme].textColor}} size={16} name="leaf"></Ionicons>
                         <CustomText size={16} isRTL={langContext.isRTL} theme={themeContext.theme} isGray={true}>{lang[langContext.lang].menu.temrs}</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.row, { alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
+                    <TouchableOpacity style={[styles.row, { flexDirection: langContext.isRTL ? 'row-reverse' : 'row', alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]}>
                         <Ionicons style={{marginEnd: 10, color: themes[themeContext.theme].textColor}} size={16} name="earth"></Ionicons>
                         <CustomText size={16} isRTL={langContext.isRTL} theme={themeContext.theme} isGray={true}>{lang[langContext.lang].menu.about}</CustomText>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.row, { alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]} onPress={logout}>
+                    <TouchableOpacity style={[styles.row, { flexDirection: langContext.isRTL ? 'row-reverse' : 'row', alignSelf: langContext.isRTL ? 'flex-end' : 'flex-start'}]} onPress={logout}>
                         <Ionicons style={{marginEnd: 10, color: themes[themeContext.theme].textColor}} size={16} name="log-out"></Ionicons>
                         <CustomText size={16} isRTL={langContext.isRTL} theme={themeContext.theme} isGray={true}>{lang[langContext.lang].btnTitles.logout}</CustomText>
                     </TouchableOpacity>
@@ -58,10 +58,10 @@ export function TopbarComponent({navigation}){
         }
     }
     return(
-        <View style={[styles.container, {backgroundColor: themes[themeContext.theme].primary}]}>
+        <View style={[styles.container, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr', flexDirection: langContext.isRTL ? 'row' : 'row-reverse'}]}>
             <Image style={styles.img} source={require('../../assets/logo.png')} />
             <TouchableOpacity onPress={toggleDropdown}>
-                <Ionicons name="settings" size={36} />
+                <Ionicons color={themes[themeContext.theme].textColor} name="settings" size={36} />
                 {menu()}
             </TouchableOpacity>
         </View>
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     container: {
         fontFamily: 'Roboto',
         display: 'flex',
-        flexDirection: 'row',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -93,16 +92,16 @@ const styles = StyleSheet.create({
     menu: {
         position: 'absolute',
         marginTop: 40,
-        marginEnd: -100,
         padding: 5,
-        alignSelf: 'flex-end',
+        width: '400%',
+        alignSelf: 'flex-start',
         borderWidth: 0.2,
         borderColor: '#A0A0A0',
         borderRadius: 5,
         alignItems: 'flex-start'
     },
     row: {
-        flexDirection: 'row',
+        // flexDirection: 'row',
         padding: 15,
         justifyContent: 'space-around',
         alignItems: 'center'

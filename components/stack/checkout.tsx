@@ -12,6 +12,7 @@ import { IEvent } from "../../models/event";
 import { themes } from "../../themes/themes";
 import { CustomText } from "../custom/text";
 import { EventCard } from "../segments/EventCard";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export default function CheckoutComponent({route, navigation}){
     const [seats, setSeats] = useState(0);
@@ -32,7 +33,6 @@ export default function CheckoutComponent({route, navigation}){
 
     const bookByCard = () => {
         bookingsApi.bookByCard({event: event, cardBooingData: cardBookingData, userId: userContext.user.id}).then((res) => {
-            console.log(res)
             navigation.navigate(AppRoutes.bookings)
         }).catch((error) => {
             console.log(error)
@@ -50,9 +50,9 @@ export default function CheckoutComponent({route, navigation}){
 
     return(
         <ScrollView style={[styles.container, {marginTop: StatusBar.currentHeight, backgroundColor: themes[themeContext].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
-            <View style={{padding: 5, flexDirection: 'row', direction: 'ltr'}}>
-                <TouchableOpacity style={{marginStart: '95%', marginBottom: 10}} onPress={() => navigation.goBack()}><Ionicons size={30} name="chevron-back"></Ionicons></TouchableOpacity>
-                <CustomText isGray={false} isRTL={langContext.isRTL} theme={themeContext}>{lang[langContext.lang].titles.checkout}</CustomText>
+            <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
+            <View style={{padding: 5, flexDirection: 'row', direction: langContext.isRTL ? 'rtl' : 'ltr', alignSelf: langContext.isRTL ? 'flex-start' : 'flex-end'}}>
+                <TouchableOpacity style={{ marginBottom: 10}} onPress={() => navigation.goBack()}><Ionicons size={30} color={themes[themeContext].textColor} name={langContext.isRTL ? "chevron-back" : "chevron-forward"}></Ionicons></TouchableOpacity>
             </View>
             <EventCard theme={themeContext} event={event} bookingId={undefined} />
             {event.vip !== undefined ? (

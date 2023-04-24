@@ -10,19 +10,20 @@ import { StatusBar } from 'expo-status-bar';
 import { AppRoutes } from '../../helpers/appRoutes';
 import CheckoutComponent from '../stack/checkout';
 
+
 const Stack = createNativeStackNavigator();
 
 function AppNavigator() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={AppRoutes.login}>
-        <Stack.Screen name="Login" component={LoginComponent} />
-        <Stack.Screen name="Signup" component={SignupComponent} />
-        <Stack.Screen name="Checkout" component={CheckoutComponent}></Stack.Screen>
-        <Stack.Screen name="Tab" component={TabNav} />
-      </Stack.Navigator>
-      <StatusBar style='auto' />
-    </NavigationContainer>
+    return (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={AppRoutes.login}>
+              <Stack.Screen name="Login" component={LoginComponent} />
+              <Stack.Screen name="Signup" component={SignupComponent} />
+              <Stack.Screen name="Checkout" component={CheckoutComponent} />
+              <Stack.Screen name="Tab" component={TabNav} />
+            </Stack.Navigator>
+            <StatusBar style='auto' />
+          </NavigationContainer>
   );
 }
 

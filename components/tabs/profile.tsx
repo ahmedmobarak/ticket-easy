@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView, StatusBar, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IUser } from "../../models/user";
 import { TopbarComponent } from "../segments/topbar";
 import { UserContext } from "../../context/userContext";
@@ -10,6 +10,7 @@ import { LangContext } from "../../context/langContext";
 import { CustomText } from "../custom/text";
 import { lang } from "../../i18n/lang";
 import { AuthApi } from "../../fetch/auth";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export default function ProfileComponent({ navigation }) {
     const user = useContext(UserContext);
@@ -20,13 +21,16 @@ export default function ProfileComponent({ navigation }) {
     const themeContext: 'light' | 'dark' = useContext(ThemeContext).theme;
     const langContext = useContext(LangContext);
 
+    useEffect(() => {
+        console.log("USER::::::::: ",user)
+      }, []);
     function updateUser(){
         console.log(editedUser)
         AuthApi.updateUserInfo(editedUser).then(res => user.setUser(res.data)).catch(error => console.log(error))
     }
     return (
         <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
-
+        <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
         <ScrollView contentContainerStyle={{height: '100%'}} style={{ minHeight: '100%', direction: langContext.isRTL ? 'rtl' : 'ltr', width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}}>
         <TopbarComponent navigation={navigation} />
         <View style={[styles.container]}>

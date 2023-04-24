@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useEffect, useState } from 'react';
 import { LocalStorageKeys } from '../helpers/localStorageKeys';
 import { IUser } from '../models/user';
+import App from '../App';
+import { AppRoutes } from '../helpers/appRoutes';
 
 interface UserContextProps{
   user: IUser,
@@ -18,6 +20,7 @@ export function UserProvider({children}){
   const getUser = async () => {
     try {
       const user = JSON.parse(await AsyncStorage.getItem(LocalStorageKeys.user));
+      if(user == null || user == undefined) return null;
       setUser(user);
     } catch (error) {
      console.log(error); 

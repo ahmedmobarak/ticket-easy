@@ -23,7 +23,7 @@ export function LangProvider({children}) {
     const getLang = async () => {
         try {
           const lang: any = await AsyncStorage.getItem(LocalStorageKeys.lang);
-          if(lang == null){
+          if(lang == null || lang == undefined){
             setLang('ar');
             setIsRTL(true);
           }

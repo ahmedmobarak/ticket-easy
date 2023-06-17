@@ -72,8 +72,8 @@ export default function CheckoutComponent({route, navigation}){
                 
             </View>
             <View style={[styles.btnGroup, {flexDirection: 'row'}]}>
-                <TouchableOpacity onPress={() => setPayment('wallet')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'wallet' ? themes.dark.orange : '#DC5076'}]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithWallet}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setPayment('card')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'card' ? themes.dark.orange : '#DC5076' }]}><Text style={{color: themes[themeContext].textColor}}>{lang[langContext.lang].btnTitles.bookWithCard}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setPayment('wallet')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'wallet' ? themes.dark.orange : '#DC5076'}]}><Text style={{color: 'white'}}>{lang[langContext.lang].btnTitles.bookWithWallet}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setPayment('card')} style={[styles.tab, {borderBottomColor: themes[themeContext].textColor, backgroundColor: payment === 'card' ? themes.dark.orange : '#DC5076' }]}><Text style={{color: 'white'}}>{lang[langContext.lang].btnTitles.bookWithCard}</Text></TouchableOpacity>
             </View>
             <View>
                 {payment === 'wallet' ? 

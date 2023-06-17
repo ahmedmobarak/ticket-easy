@@ -1,17 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, StatusBar, ImageBackground, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { Local } from "../../enviroment";
 import { ApiRoutes } from "../../helpers/apiRoutes";
 import { AppRoutes } from "../../helpers/appRoutes";
 
 export function SignupComponent({navigation}){
-    const name = useRef(null as string);
-    const email = useRef(null as string);
-    const phone = useRef(null as number);
-    const password = useRef(null as string);
-    const confirmPassword = useRef(null as string);
+    const [user, setUser] = useState({} as any);
 
     async function storeUserInfo(user) {
         try {
@@ -23,11 +19,11 @@ export function SignupComponent({navigation}){
 
     const signup = () => {
         axios.post(Local.baseUrl+ApiRoutes.auth.signup, {
-            name: name.current.value,
-            email: email.current.value,
-            phone: phone.current.value,
-            password: password.current.value,
-            confirmPassword: confirmPassword.current.value
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            password: user.password,
+            confirmPassword: user.confirmPassword
         }).then((res) => {
             let user = {
                 id: res.data._id,
@@ -61,23 +57,23 @@ export function SignupComponent({navigation}){
             <View style={styles.card}>
                 <View>
                 <Text style={{ color: '#15233f' }}>Name</Text>
-                <TextInput id="name" onChange={(e) => validate(e, 'name')} ref={name} style={styles.input} placeholder='e. John Doe' blurOnSubmit placeholderTextColor={'#15233f'} ></TextInput>
+                <TextInput id="name" onChange={(e) => validate(e, 'name')} onChangeText={(text) => setUser((current) => ({ ...current, name: text}))}style={styles.input} placeholder='e. John Doe' blurOnSubmit placeholderTextColor={'#15233f'} ></TextInput>
                 </View>
                 <View>
                 <Text style={{ color: '#15233f' }}>Email</Text>
-                <TextInput ref={email} style={styles.input} placeholder='example@email.com' blurOnSubmit placeholderTextColor={'#15233f'} keyboardType={'email-address'} textContentType='emailAddress'></TextInput>
+                <TextInput onChangeText={(text) => setUser((current) => ({ ...current, email: text}))} style={styles.input} placeholder='example@email.com' blurOnSubmit placeholderTextColor={'#15233f'} keyboardType={'email-address'} textContentType='emailAddress'></TextInput>
                 </View>
                 <View>
                 <Text style={{ color: '#15233f' }}>Phone number</Text>
-                <TextInput ref={phone} style={styles.input} placeholder='0xxxxxxxxx' blurOnSubmit placeholderTextColor={'#15233f'} keyboardType={'phone-pad'}></TextInput>
+                <TextInput onChangeText={(text) => setUser((current) => ({ ...current, phone: text}))} style={styles.input} placeholder='0xxxxxxxxx' blurOnSubmit placeholderTextColor={'#15233f'} keyboardType={'phone-pad'}></TextInput>
                 </View>
                 <View>
                 <Text style={{ color: '#15233f' }}>Password</Text>
-                <TextInput ref={password} style={styles.input} placeholder='password' blurOnSubmit placeholderTextColor={'#15233f'} secureTextEntry></TextInput>
+                <TextInput onChangeText={(text) => setUser((current) => ({ ...current, password: text}))} style={styles.input} placeholder='password' blurOnSubmit placeholderTextColor={'#15233f'} secureTextEntry></TextInput>
                 </View>
                 <View>
                 <Text style={{ color: '#15233f' }}>Confirm Password</Text>
-                <TextInput ref={confirmPassword} style={styles.input} placeholder='confirm password' blurOnSubmit placeholderTextColor={'#15233f'} secureTextEntry></TextInput>
+                <TextInput onChangeText={(text) => setUser((current) => ({ ...current, confirmPassword: text}))} style={styles.input} placeholder='confirm password' blurOnSubmit placeholderTextColor={'#15233f'} secureTextEntry></TextInput>
                 </View>
                 <TouchableOpacity style={styles.btn} onPress={() => signup()} ><Text style={styles.btnText}>Sign up</Text></TouchableOpacity>
                 <TouchableOpacity style={{  }} onPress={() => {navigation.navigate(AppRoutes.login)}} ><Text style={{textDecorationLine: 'underline'}}>Already have an account?</Text></TouchableOpacity>

@@ -1,8 +1,8 @@
 export const LightTheme = {
     primary: '#FFFFFF',
-    accent: '#F2FDFF',
+    accent: '#D2D2D2',
     textColor: '#333333',
-    textColorGray: '#A0C9CA',
+    textColorGray: '#444444',
     border: '#444444',
     pink: '#C1308B',
     orange: '#E4835B',

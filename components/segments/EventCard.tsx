@@ -35,8 +35,14 @@ export function EventCard({event, theme, bookingId}){
                     }} />
                 <View style={{ flex: 1}}>
                      <Text style={[styles.details, {fontSize: 16, color: themes[theme].textColor}]}>{event.title}</Text>
-                    <Text style={[styles.details, {color: themes[theme].textColorGray}]}>{event.location}</Text>
-                    <Text style={[styles.details, {color: themes[theme].textColorGray}]}>{event.dateTime}</Text>
+                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <Ionicons name="pin-outline" size={18} color={themes[theme].textColorGray} />
+                        <Text style={[styles.details, {color: themes[theme].textColorGray}]}>{event.location}</Text>
+                    </View>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                        <Ionicons name="calendar-outline" size={18} color={themes[theme].textColorGray} />
+                        <Text style={[styles.details, {color: themes[theme].textColorGray}]}>{event.dateTime}</Text>
+                    </View>
                     <Text style={[styles.details ,{fontSize: 16, color: themes[theme].textColorGray}]}>Normal: {event.normal} {event.vip ? ' | VIP ' + event.vip : ''}</Text>
                 </View>
                 {bookingId !== undefined ? <TouchableOpacity onPress={() => toggleQrCode()} style={{ left: 0 }}>

@@ -19,7 +19,16 @@ export function Event({ item, isRtl }: { item: IEvent, isRtl: boolean }) {
                 <View style={[styles.description, {alignItems: 'flex-start', flexDirection: isRtl ? 'row' : 'row-reverse'}]}>
                     <View style={{ display: 'flex', flex: 7, marginStart: 0.5, alignItems: isRtl ? 'flex-end' : 'flex-start', width: '100%' }}>
                         <Text style={{ textAlign: 'left', fontSize: 22, fontWeight: 'bold', color: 'white' }}>{item.title}</Text>
-                        <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}>{item.location} | {item.dateTime}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row'}}>
+                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <Ionicons name="pin-outline" size={14} color={"white"} />
+                                <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}>{item.location} </Text>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <Ionicons name="calendar-outline" size={14} color={"white"} />
+                                <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}> {item.dateTime}</Text>
+                            </View>
+                        </View>
                     </View>
                     <TouchableOpacity
                         style={[styles.btn, {flex: 1, position: 'absolute', alignSelf: 'center', marginEnd: isRtl ? 0 : 5, marginStart: isRtl ? 5 : 0}]}

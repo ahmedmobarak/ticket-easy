@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, ImageBackground, SafeAreaView, KeyboardAvoidingView, Keyboard } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Local } from "../../enviroment";
 import { ApiRoutes } from "../../helpers/apiRoutes";
 import { AppRoutes } from "../../helpers/appRoutes";
 import { UserContext } from "../../context/userContext";
+import KeyboardShift from "@fullstackcraft/react-native-keyboard-shift";
 
 export default function LoginComponent({ navigation }) {
     const [email, setEmail] = useState();
@@ -30,11 +31,12 @@ export default function LoginComponent({ navigation }) {
                 password: password
             })
             .then(function (res) {
+                console.log(res.data);
                 let user = {
-                    id: res.data[0]._id,
-                    name: res.data[0].name,
-                    email: res.data[0].email,
-                    phone: res.data[0].phone
+                    id: res.data._id,
+                    name: res.data.name,
+                    email: res.data.email,
+                    phone: res.data.phone
                 }
                 setIsloading(false);
                 storeUserInfo(JSON.stringify(user));
@@ -65,25 +67,30 @@ export default function LoginComponent({ navigation }) {
         </View>
     )
     else return (
+        <KeyboardShift>
         <ImageBackground style={{width: '100%', height: '100%'}} source={require('../../assets/login.jpg')}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-                <View style={styles.card}>
+                <SafeAreaView
+                    style={styles.card}>
                     <View>
                        <Text style={{ color: '#15233f' }}>Email</Text>
-                    <TextInput onChangeText={setEmail} style={styles.input} placeholder='example@email.com' placeholderTextColor={'#15233f'} textContentType='emailAddress'></TextInput> 
+                    <TextInput onChangeText={setEmail} style={styles.input} placeholder='example@email.com' placeholderTextColor={'#babcc0'} textContentType='emailAddress'></TextInput> 
                     </View>
 
                     <View>
                        <Text style={{ color: '#15233f' }}>Password</Text>
-                    <TextInput onChangeText={setPassword} style={styles.input} placeholder='password' placeholderTextColor={'#15233f'} secureTextEntry></TextInput> 
+                    <TextInput onChangeText={setPassword} style={styles.input} placeholder='password' placeholderTextColor={'#babcc0'} secureTextEntry></TextInput> 
                     </View>
                     
                     <TouchableOpacity style={styles.btn} onPress={() => login()} ><Text style={styles.btnText}>Login</Text></TouchableOpacity>
                     <TouchableOpacity style={{  }} onPress={() => {navigation.navigate(AppRoutes.signup)}} ><Text style={{textDecorationLine: 'underline'}}>Don't have account?</Text></TouchableOpacity>
                     <StatusBar style="auto" />
-                </View>
+                </SafeAreaView>
             </View>
+                </TouchableWithoutFeedback>
         </ImageBackground>
+            </KeyboardShift>
     );
 }
 

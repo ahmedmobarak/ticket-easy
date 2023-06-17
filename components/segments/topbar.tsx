@@ -61,7 +61,7 @@ export function TopbarComponent({navigation}){
         <View style={[styles.container, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr', flexDirection: langContext.isRTL ? 'row' : 'row-reverse'}]}>
             <Image style={styles.img} source={require('../../assets/logo.png')} />
             <TouchableOpacity onPress={toggleDropdown}>
-                <Ionicons color={themes[themeContext.theme].textColor} name="settings" size={36} />
+                <Ionicons color={themes[themeContext.theme].textColor} name="menu-outline" size={36} />
                 {menu()}
             </TouchableOpacity>
         </View>

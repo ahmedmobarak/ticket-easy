@@ -8,6 +8,7 @@ import { ThemeContext } from "../../context/themeContext";
 import { LangContext } from "../../context/langContext";
 import { lang } from "../../i18n/lang";
 import { EventsApi } from "../../fetch/events";
+import { Ionicons } from "@expo/vector-icons";
 
 export function EventsScreen() {
     const [list, setList] = useState([] as IEvent[]);
@@ -37,10 +38,10 @@ export function EventsScreen() {
         return <Event isRtl={langContext.isRTL} item={item} />
     }
 
-    const SearchBar = () => {
+    const SearchBar = ({artist}) => {
         return(
             <View style={styles.bar}>
-                <TextInput style={styles.search} placeholder="Try Adele" onChangeText={(text) => search(text) }/>                   
+                <TextInput style={[styles.search, {backgroundColor: themes[themeContext.theme].accent}]} placeholderTextColor={'white'} placeholder={`Try ${artist}`} onChangeText={(text) => search(text) }/>                   
             </View>
         )
     }
@@ -66,7 +67,7 @@ export function EventsScreen() {
 
     else return (
         <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
-            <SearchBar />
+            <SearchBar artist={tempList[0].artist} />
             <View style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -74,9 +75,16 @@ export function EventsScreen() {
                 width: '100%',
                 marginBottom: 10
             }}>
-                <TouchableOpacity onPress={() => setCat('concert')} style={[styles.category, {backgroundColor: cat == 'concert' ? '#D3D3D3' : '#787878'}]}><Text>{lang[langContext.lang].titles.concerts}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setCat('match')} style={[styles.category, {backgroundColor: cat == 'match' ? '#D3D3D3' : '#787878'}]}><Text>{lang[langContext.lang].titles.matches}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setCat('other')} style={[styles.category, {backgroundColor: cat == 'other' ? '#D3D3D3' : '#787878'}]}><Text>{lang[langContext.lang].titles.other}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCat('concert')} style={[styles.category, {backgroundColor: cat == 'concert' ? themes.dark.mixed : themes.dark.orange}]}>
+                    <Ionicons color={"white"} name="ios-mic-outline" size={18} />
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.concerts}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setCat('match')} style={[styles.category, {backgroundColor: cat == 'match' ? themes.dark.mixed : themes.dark.orange}]}>
+                    <Ionicons color={"white"} name="football-outline" size={18} />
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.matches}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setCat('other')} style={[styles.category, {backgroundColor: cat == 'other' ? themes.dark.mixed : themes.dark.orange}]}>
+                    <Ionicons color={"white"} name="ellipsis-vertical-outline" size={18} />
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.other}</Text></TouchableOpacity>
             </View>
             <FlatList
                 data={tempList}
@@ -158,12 +166,14 @@ const styles = StyleSheet.create({
             left: 0
         },
         search: {
-            color: 'tomato',
+            color: 'white',
+            backgroundColor: '#D1D1D1',
+            elevation: 4,
             paddingHorizontal: 15, 
             paddingVertical: 5, 
             margin: 10, 
             // minWidth: '65%',
-            borderColor: 'tomato', 
+            borderColor: 'transparent', 
             borderWidth: 1, 
             borderRadius: 25,
             flex: 1,
@@ -171,6 +181,8 @@ const styles = StyleSheet.create({
             maxWidth: '90%'
         },
         category: {
+            display: 'flex',
+            flexDirection: 'row',
             paddingHorizontal: 15,
             paddingVertical: 5,
             // backgroundColor: '#AAAAAA',

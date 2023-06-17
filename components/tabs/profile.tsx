@@ -22,7 +22,6 @@ export default function ProfileComponent({ navigation }) {
     const langContext = useContext(LangContext);
 
     useEffect(() => {
-        console.log("USER::::::::: ",user)
       }, []);
     function updateUser(){
         console.log(editedUser)

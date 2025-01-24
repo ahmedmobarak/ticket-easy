@@ -24,10 +24,6 @@ export function Event({ item, isRtl }: { item: IEvent, isRtl: boolean }) {
                                 <Ionicons name="pin-outline" size={14} color={"white"} />
                                 <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}>{item.location} </Text>
                             </View>
-                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <Ionicons name="calendar-outline" size={14} color={"white"} />
-                                <Text style={{ textAlign: isRtl ? 'right' : 'left', fontSize: 12, color: 'white' }}> {item.dateTime}</Text>
-                            </View>
                         </View>
                     </View>
                     <TouchableOpacity

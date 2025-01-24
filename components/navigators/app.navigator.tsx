@@ -9,6 +9,8 @@ import { SignupComponent } from '../auth/signup';
 import { StatusBar } from 'expo-status-bar';
 import { AppRoutes } from '../../helpers/appRoutes';
 import CheckoutComponent from '../stack/checkout';
+import PaymentScreen from '../stack/payment';
+import MapScreen from '../stack/map';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +22,8 @@ function AppNavigator() {
               <Stack.Screen name="Login" component={LoginComponent} />
               <Stack.Screen name="Signup" component={SignupComponent} />
               <Stack.Screen name="Checkout" component={CheckoutComponent} />
+              <Stack.Screen name="Payment" component={PaymentScreen} />
+              <Stack.Screen name="Map" component={MapScreen} />
               <Stack.Screen name="Tab" component={TabNav} />
             </Stack.Navigator>
             <StatusBar style='auto' />

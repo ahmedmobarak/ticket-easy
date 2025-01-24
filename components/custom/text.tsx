@@ -2,20 +2,20 @@ import { Text } from "react-native";
 import { themes } from "../../themes/themes";
 
 interface TextProps{
-    theme: 'light' | 'dark',
+    theme?: 'light' | 'dark',
     size?: number,
-    isGray: boolean,
-    isRTL: boolean,
+    isGray?: boolean,
+    textAlign?: 'auto' | 'center' | 'left' | 'right',
     children: any
 }
 
-export function CustomText({theme, size, isGray, isRTL, children}: TextProps){
+export function CustomText({theme, size, isGray, textAlign, children}: TextProps){
     return(
         <Text style={{
             fontFamily: 'Roboto',
             color: isGray ? themes[theme].textColorGray : themes[theme].primary,
             fontSize: size,
-            textAlign: 'left',
+            textAlign: textAlign,
             alignSelf: 'flex-start'
         }}>
             {children}

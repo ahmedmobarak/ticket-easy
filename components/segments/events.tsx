@@ -9,12 +9,16 @@ import { LangContext } from "../../context/langContext";
 import { lang } from "../../i18n/lang";
 import { EventsApi } from "../../fetch/events";
 import { Ionicons } from "@expo/vector-icons";
+import { IconButton } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { LookupAPI } from "../../fetch/lookup";
 
 export function EventsScreen() {
     const [list, setList] = useState([] as IEvent[]);
     const [tempList, setTempList] = useState([] as IEvent[]);
     const [isLoading, setIsLoading] = useState(true);
-    const [cat, setCat] = useState('concert' as 'concert' | 'match' | 'other');
+    const [cat, setCat] = useState('concert' as 'concert' | 'match' | 'venue' | 'other');
+    const [categoriesList, setCategoriesList] = useState([]);
 
     const themeContext = useContext(ThemeContext);
     const langContext = useContext(LangContext);
@@ -28,9 +32,16 @@ export function EventsScreen() {
                 setIsLoading(false);
                 return error
             });
+            LookupAPI.getEventTypes().then((res) => {
+                setCategoriesList(res.data);
+            }).catch((error) => {
+                return error
+            });
         },
         [cat, themeContext, langContext],
     );
+
+    const navigation: any = useNavigation();
 
     // const styles = useMemo(() => createStyles('light'), [theme]);
 
@@ -41,7 +52,8 @@ export function EventsScreen() {
     const SearchBar = ({artist}) => {
         return(
             <View style={styles.bar}>
-                <TextInput style={[styles.search, {backgroundColor: themes[themeContext.theme].accent}]} placeholderTextColor={'white'} placeholder={`Try ${artist}`} onChangeText={(text) => search(text) }/>                   
+                <TextInput style={[styles.search, {backgroundColor: themes[themeContext.theme].accent}]} placeholderTextColor={'white'} placeholder={`Try Adele`} onChangeText={(text) => search(text) }/>                   
+                <IconButton icon={'map'} iconColor={'#27cc7f'} size={20} onPress={() => navigation.navigate('Map')} />
             </View>
         )
     }
@@ -67,7 +79,7 @@ export function EventsScreen() {
 
     else return (
         <SafeAreaView style={[styles.safeArea, {backgroundColor: themes[themeContext.theme].primary, direction: langContext.isRTL ? 'rtl' : 'ltr'}]}>
-            <SearchBar artist={tempList[0].artist} />
+            <SearchBar artist={'Adele'} />
             <View style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -75,16 +87,22 @@ export function EventsScreen() {
                 width: '100%',
                 marginBottom: 10
             }}>
-                <TouchableOpacity onPress={() => setCat('concert')} style={[styles.category, {backgroundColor: cat == 'concert' ? themes.dark.mixed : themes.dark.orange}]}>
-                    <Ionicons color={"white"} name="ios-mic-outline" size={18} />
-                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.concerts}</Text>
-                </TouchableOpacity>
+                {categoriesList.map(catType => (
+                    <TouchableOpacity key={catType.id} onPress={() => setCat(catType.id)} style={[styles.category, {backgroundColor: cat == catType.id ? themes.dark.mixed : themes.dark.orange}]}>
+                    <Ionicons color={"white"} name={catType.icon} size={18} />
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles[catType.id]}</Text>
+                    </TouchableOpacity>
+                ))}
+                
+                {/* <TouchableOpacity onPress={() => setCat('venue')} style={[styles.category, {backgroundColor: cat == 'venue' ? themes.dark.mixed : themes.dark.orange}]}>
+                    <Ionicons color={"white"} name="location-outline" size={18} />
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.venues}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCat('match')} style={[styles.category, {backgroundColor: cat == 'match' ? themes.dark.mixed : themes.dark.orange}]}>
                     <Ionicons color={"white"} name="football-outline" size={18} />
                     <Text style={{color: "white"}}>{lang[langContext.lang].titles.matches}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => setCat('other')} style={[styles.category, {backgroundColor: cat == 'other' ? themes.dark.mixed : themes.dark.orange}]}>
                     <Ionicons color={"white"} name="ellipsis-vertical-outline" size={18} />
-                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.other}</Text></TouchableOpacity>
+                    <Text style={{color: "white"}}>{lang[langContext.lang].titles.other}</Text></TouchableOpacity> */}
             </View>
             <FlatList
                 data={tempList}

@@ -28,7 +28,6 @@ export function WalletComponent(){
     return(
         <View style={{marginTop: StatusBar.currentHeight}}>
         <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
-        <TopbarComponent navigation={undefined} />
         <View style={[styles.container, {width: '100%', height: '100%', backgroundColor: themes[themeContext].primary}]}>
             <View style={{
                 backgroundColor: themes.dark.mixed,

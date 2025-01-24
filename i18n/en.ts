@@ -1,6 +1,11 @@
 export const en = {
     lables: {
         name: 'name',
+        personlize: 'Personlize',
+        settings: 'Settings',
+        profile: 'Profile',
+        privacy: 'Privacy',
+        about: 'About',
         email: 'Email',
         password: 'Password',
         confirmPassword: 'Confirm password',
@@ -11,6 +16,12 @@ export const en = {
         cardNo: 'Card number',
         pin: 'PIN',
         sdg: 'SDG'
+    },
+    subtitles: {
+        profile: 'Edit your personal information',
+        privacy: 'Permissions and privacy options',
+        about: 'Software info and updates',
+        personlize: 'Themes, wallpapers, and icons'
     },
     btnTitles: {
         bookWithWallet: 'Book with Wallet',
@@ -38,8 +49,9 @@ export const en = {
     },
     titles: {
         checkout: 'Confirm booking',
-        concerts: 'Concerts',
-        matches: 'Matches',
+        concert: 'Concerts',
+        venue: 'Venues',
+        sport: 'Sports',
         other: 'Other'
     }
 }

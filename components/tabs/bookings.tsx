@@ -36,7 +36,6 @@ export default function BookingsComponent({ navigation }) {
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: themes[themeContext].primary, marginTop: StatusBar.currentHeight, direction: langContext.isRTL ? 'rtl' : 'ltr' }]}>
             <ExpoStatusBar translucent={true} backgroundColor={themes[themeContext].primary} style='auto' />
-            <TopbarComponent navigation={navigation} />
             <View>
                 <FlatList
                     data={bookings}

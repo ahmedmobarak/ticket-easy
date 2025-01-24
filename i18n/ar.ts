@@ -1,6 +1,11 @@
 export const ar = {
     lables: {
         name: 'الإسم',
+        personlize: 'التخصيص',
+        settings: 'الإعدادات',
+        profile: 'الملف الشخصي',
+        privacy: 'الخصوصية',
+        about: 'عن التطبيق',
         email: 'البريد الالكتروني',
         password: 'كلمة المرور',
         confirmPassword: 'تأكيد كلمة المرور',
@@ -11,6 +16,12 @@ export const ar = {
         cardNo: 'رقم البطاقة المصرفية',
         pin: 'الرقم السري',
         sdg: 'ج'
+    },
+    subtitles: {
+        profile: 'المعلومات الشخصية',
+        privacy: 'الصلاحيات وخيارات الخصوصية',
+        about: 'معلومات عن التطبيق والتحديثات',
+        personlize: 'الثيمات والخلفيات والأيقونات'
     },
     btnTitles: {
         bookWithWallet: 'حجز بالمحفظة',
@@ -38,8 +49,9 @@ export const ar = {
     },
     titles: {
         checkout: 'تأكيد الحجز',
-        concerts: 'حفلات',
-        matches: 'مباريات',
+        concert: 'حفلات',
+        venue: 'محل',
+        sport: 'رياضة',
         other: 'أخرى'
     }
 }

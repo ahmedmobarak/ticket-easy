@@ -67,19 +67,19 @@ export default function LoginComponent({ navigation }) {
         </View>
     )
     else return (
-        <KeyboardShift>
+        <KeyboardAvoidingView>
         <ImageBackground style={{width: '100%', height: '100%'}} source={require('../../assets/login.jpg')}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <SafeAreaView
                     style={styles.card}>
                     <View>
-                       <Text style={{ color: '#15233f' }}>Email</Text>
+                       <Text style={{ color: '#15233f', fontSize: 14 }}>Email</Text>
                     <TextInput onChangeText={setEmail} style={styles.input} placeholder='example@email.com' placeholderTextColor={'#babcc0'} textContentType='emailAddress'></TextInput> 
                     </View>
 
                     <View>
-                       <Text style={{ color: '#15233f' }}>Password</Text>
+                       <Text style={{ color: '#15233f', fontSize: 14 }}>Password</Text>
                     <TextInput onChangeText={setPassword} style={styles.input} placeholder='password' placeholderTextColor={'#babcc0'} secureTextEntry></TextInput> 
                     </View>
                     
@@ -90,7 +90,7 @@ export default function LoginComponent({ navigation }) {
             </View>
                 </TouchableWithoutFeedback>
         </ImageBackground>
-            </KeyboardShift>
+            </KeyboardAvoidingView>
     );
 }
 
@@ -105,15 +105,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 30,
         justifyContent: 'space-around',
-        width: '90%',
-        height: '50%',
-        marginBottom: 100
+        width: 350,
+        height: 500
     },
     input: {
         color: '#15233f',
         padding: 15,
         borderRadius: 30,
-        borderColor: '#A0A0A0',
+        borderColor: '#DDDDDD',
         borderStyle: 'solid',
         borderWidth: 1,
         marginTop: 10,

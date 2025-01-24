@@ -13,6 +13,7 @@ export default function TabNav() {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarShowLabel: false,
+                // tabBarBackground: 'blue',
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 

@@ -6,6 +6,7 @@ export const ApiRoutes = {
     },
     events: {
         main: 'events/',
+        mapEvents: 'map/events/'
     },
     auth: {
         login: 'auth/login',
@@ -14,5 +15,12 @@ export const ApiRoutes = {
     },
     wallet: {
         getBalance: 'wallet/'
+    },
+    lookup: {
+        eventTypes: 'lookup/event-types/'
+    },
+    payment: {
+        main: 'payment/',
+        paymentSheet: 'payment-sheet'
     }
 }
